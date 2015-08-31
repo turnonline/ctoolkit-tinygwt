@@ -1,0 +1,141 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>org.ctoolkit.maven</groupId>
+        <artifactId>ctoolkit-parent</artifactId>
+        <version>2</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.ctoolkit.turnonline</groupId>
+    <artifactId>turnonline-gwt</artifactId>
+    <version>0.5-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>TurnOnline.biz GWT components</name>
+    <description>TurnOnline.biz GWT components</description>
+    <url>https://github.com/turnonline/turnonline-gwt</url>
+
+    <scm>
+        <connection>scm:git:[fetch=]git@github.com:turnonline/turnonline-gwt.git</connection>
+        <developerConnection>scm:git:[push=]git@github.com:turnonline/turnonline-gwt.git</developerConnection>
+        <url>https://github.com/turnonline/turnonline-gwt</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <url>${project.scm.url}/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <name>Aurel Medvegy</name>
+            <id>medvegy</id>
+            <email>aurel.medvegy@ctoolkit.org</email>
+        </developer>
+        <developer>
+            <name>Jozef Pohorelec</name>
+            <id>pohorelec</id>
+            <email>jozef.pohorelec@ctoolkit.org</email>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <module>org.ctoolkit.turnonline.gwt.TurnOnline</module>
+                        </configuration>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <argLine>-Xmx128m ${jmockit.setting}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <!-- Include site generation and deployment into release -->
+                    <goals>deploy site site-deploy</goals>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>${gin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+
+        <!--Test dependencies-->
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>${jmockit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <gwt.version>2.7.0</gwt.version>
+        <gwt-plugin.version>2.7.0</gwt-plugin.version>
+        <validation-api.version>1.0.0.GA</validation-api.version>
+        <gin.version>2.1.2</gin.version>
+        <slf4j-api.version>1.6.6</slf4j-api.version>
+        <jmockit.version>1.18</jmockit.version>
+        <!-- jmockit settings for OpenJDK otherwise throws 'IllegalStateException: To run on OpenJDK 64-Bit Server VM use -javaagent..' -->
+        <jmockit.setting>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+        </jmockit.setting>
+    </properties>
+
+</project>
