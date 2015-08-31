@@ -88,6 +88,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.google.web.bindery</groupId>
+            <artifactId>requestfactory-server</artifactId>
+            <version>${gwt.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.google.gwt.inject</groupId>
             <artifactId>gin</artifactId>
             <version>${gin.version}</version>
@@ -104,6 +110,21 @@
             <version>${validation-api.version}</version>
             <classifier>sources</classifier>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -131,6 +152,7 @@
         <gwt-plugin.version>2.7.0</gwt-plugin.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
         <gin.version>2.1.2</gin.version>
+        <guice.version>3.0</guice.version>
         <slf4j-api.version>1.6.6</slf4j-api.version>
         <jmockit.version>1.18</jmockit.version>
         <!-- jmockit settings for OpenJDK otherwise throws 'IllegalStateException: To run on OpenJDK 64-Bit Server VM use -javaagent..' -->
