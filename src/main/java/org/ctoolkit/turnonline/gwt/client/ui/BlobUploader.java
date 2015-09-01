@@ -152,7 +152,8 @@ public class BlobUploader
     }
 
     /**
-     * Returns the blob key returned once upload has been processed successfully.
+     * Returns the blob key once upload has been processed successfully.
+     * Otherwise returns <tt>null</tt>.
      *
      * @return the blob key
      */

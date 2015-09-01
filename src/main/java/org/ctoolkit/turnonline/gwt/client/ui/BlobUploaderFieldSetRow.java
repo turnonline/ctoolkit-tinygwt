@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * The Blob uploader fieldset row.
+ * The Blob uploader fieldset row that wraps {@link BlobUploader}.
  * <p/>
  * <h3>CSS Style Rules</h3>
  * <dl>
@@ -97,9 +97,30 @@ public class BlobUploaderFieldSetRow
     }
 
     /**
+     * Returns the blob key taken from the uploader component.
+     * The <tt>null</tt> value means there was not processed any upload successfully.
+     *
+     * @return the blob key
+     */
+    public String getBlobKey()
+    {
+        return uploader.getBlobKey();
+    }
+
+    /**
+     * Returns the image serving URL taken from the uploader component.
+     *
+     * @return the image serving URL
+     */
+    public String getImageServingUrl()
+    {
+        return uploader.getImageServingUrl();
+    }
+
+    /**
      * Sets the image serving URL.
      *
-     * @param servingUrl the image serving URL to be set
+     * @param servingUrl the image serving URL to be set on uploader
      */
     public void setImageServingUrl( String servingUrl )
     {
