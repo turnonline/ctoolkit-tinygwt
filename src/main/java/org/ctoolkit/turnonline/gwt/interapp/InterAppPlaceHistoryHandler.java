@@ -15,6 +15,7 @@
  */
 package org.ctoolkit.turnonline.gwt.interapp;
 
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -160,8 +161,11 @@ public class InterAppPlaceHistoryHandler
             String[] split = token.split( "/" );
             if ( split.length >= 2 )
             {
+                JsArrayString data = ( ( JsArrayString ) JsArrayString.createArray() );
+                data.push( token );
+
                 String modulePart = split[0];
-                InterAppEventBus.fireEvent( modulePart );
+                InterAppEventBus.fireEvent( modulePart, data );
             }
             return;
         }
