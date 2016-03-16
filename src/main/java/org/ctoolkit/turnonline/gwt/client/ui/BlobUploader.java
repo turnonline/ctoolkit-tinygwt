@@ -168,7 +168,7 @@ public class BlobUploader
     }
 
     /**
-     * Returns the image serving URL returned once upload has been processed successfully or origin value set by
+     * Returns either the image serving URL once upload has been processed successfully or origin value set by
      * {@link #setImageServingUrl(String)}.
      *
      * @return the serving URL
