@@ -49,7 +49,7 @@ public class InterAppEventBus
         var ua = window.navigator.userAgent;
         var msie = ua.indexOf( "MSIE " );
         var event = null;
-        if ( msie > 0 )
+        if ( msie > 0 || (ua.indexOf( "Trident" ) != -1 && msie == -1) )
         {
             //since IE9 doesn't support constructor initialization
             event = document.createEvent( 'CustomEvent' );
