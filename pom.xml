@@ -150,19 +150,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <properties>
-        <ctoolkit-library-bom.version>1</ctoolkit-library-bom.version>
+        <ctoolkit-library-bom.version>2</ctoolkit-library-bom.version>
         <gwt-bom.version>2.7.0-SNAPSHOT</gwt-bom.version>
         <gwt-plugin.version>2.7.0</gwt-plugin.version>
         <gin.version>2.1.2</gin.version>
-        <jmockit.version>1.22</jmockit.version>
+        <testng.version>6.9.10</testng.version>
+        <jmockit.version>1.24</jmockit.version>
         <!-- jmockit settings for OpenJDK otherwise throws 'IllegalStateException: To run on OpenJDK 64-Bit Server VM use -javaagent..' -->
         <jmockit.setting>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
         </jmockit.setting>
