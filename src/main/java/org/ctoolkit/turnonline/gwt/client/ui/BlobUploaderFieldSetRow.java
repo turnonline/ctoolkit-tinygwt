@@ -97,6 +97,17 @@ public class BlobUploaderFieldSetRow
     }
 
     /**
+     * Returns the blob name in storage once upload by uploader component has been processed successfully.
+     * The <tt>null</tt> value means there was not processed any upload successfully.
+     *
+     * @return the blob name in storage
+     */
+    public String getStorageName()
+    {
+        return uploader.getStorageName();
+    }
+
+    /**
      * Returns the blob key taken from the uploader component.
      * The <tt>null</tt> value means there was not processed any upload successfully.
      *

@@ -47,6 +47,8 @@ public class BlobUploader
 
     private IconButton button;
 
+    private String storageName;
+
     private String blobKey;
 
     private String imageServingUrl;
@@ -142,13 +144,35 @@ public class BlobUploader
                 JsonOutput json = bean.as();
 
                 setImageServingUrl( json.getServingUrl() );
-                setBlobKey( json.getKey() );
+                setBlobKey( json.getBlobKey() );
+                setStorageName( json.getStorageName() );
             }
         } );
 
         PREVIEW_IMAGE.setStyleName( "preview-image" );
 
         initWidget( rootPanel );
+    }
+
+    /**
+     * Returns the blob name in storage once upload has been processed successfully.
+     * Otherwise returns <tt>null</tt>.
+     *
+     * @return the blob name in storage
+     */
+    public String getStorageName()
+    {
+        return storageName;
+    }
+
+    /**
+     * Sets the blob name.
+     *
+     * @param name the blob name to be set
+     */
+    public void setStorageName( String name )
+    {
+        this.storageName = name;
     }
 
     /**
@@ -272,9 +296,9 @@ public class BlobUploader
 
     interface JsonOutput
     {
-        String getKey();
+        String getStorageName();
 
-        void setKey( String key );
+        void setStorageName( String name );
 
         String getServingUrl();
 
@@ -283,6 +307,10 @@ public class BlobUploader
         String getCustomName();
 
         void setCustomName( String uploadName );
+
+        String getBlobKey();
+
+        void setBlobKey( String blobKey );
     }
 
     interface OutputFactory
