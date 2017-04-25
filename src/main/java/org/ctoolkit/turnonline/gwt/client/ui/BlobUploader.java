@@ -4,8 +4,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -255,6 +258,18 @@ public class BlobUploader
     {
         previewPanel.clear();
         previewPanel.add( image );
+
+        Button deleteButton = new Button(  );
+        deleteButton.addClickHandler( new ClickHandler()
+        {
+            @Override
+            public void onClick( ClickEvent event )
+            {
+                // TODO: call handler to delete image
+            }
+        } );
+        deleteButton.setStyleName( "preview-image-delete" );
+        previewPanel.add( deleteButton );
     }
 
     private boolean isNullOrEmpty( String string )
