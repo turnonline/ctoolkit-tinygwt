@@ -1,4 +1,4 @@
-package org.ctoolkit.turnonline.gwt.client.common.view;
+package org.ctoolkit.turnonline.gwt.client.view;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.web.bindery.event.shared.EventBus;

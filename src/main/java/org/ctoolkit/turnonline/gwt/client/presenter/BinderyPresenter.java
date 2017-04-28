@@ -1,20 +1,20 @@
-package org.ctoolkit.turnonline.gwt.client.common.presenter;
+package org.ctoolkit.turnonline.gwt.client.presenter;
 
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
-import org.ctoolkit.turnonline.gwt.client.common.view.IView;
+import org.ctoolkit.turnonline.gwt.client.view.IView;
 
 import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNotNull;
 
 /**
- * The activity presenter implementation. Presenter acts upon the model and the view.
+ * The bindery activity presenter implementation. Presenter acts upon the model and the view.
  * It retrieves data from the model and prepares it to be displayed in the view.
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
-public abstract class Presenter<V extends IView>
+public abstract class BinderyPresenter<V extends IView>
         extends BaseActivity
 {
     private static IView currentView;
@@ -27,7 +27,7 @@ public abstract class Presenter<V extends IView>
 
     private AcceptsOneWidget root;
 
-    public Presenter( EventBus eventBus, V view, PlaceController placeController )
+    public BinderyPresenter( EventBus eventBus, V view, PlaceController placeController )
     {
         this.eventBus = checkNotNull( eventBus );
         this.view = checkNotNull( view );
@@ -86,7 +86,7 @@ public abstract class Presenter<V extends IView>
     }
 
     /**
-     * Override if needed to prepare data.
+     * Override if needed to prepare data. For example for backend data initialization etc.
      * <p>
      * NOTE: Do not put any handlers in to this method otherwise handler will be added every time view is being rendered.
      */
@@ -110,7 +110,7 @@ public abstract class Presenter<V extends IView>
      *
      * @return the singleton event bus
      */
-    protected final EventBus bus()
+    protected EventBus bus()
     {
         return eventBus;
     }
@@ -120,7 +120,7 @@ public abstract class Presenter<V extends IView>
      *
      * @return the related view instance
      */
-    protected final V view()
+    protected V view()
     {
         return view;
     }
@@ -130,7 +130,7 @@ public abstract class Presenter<V extends IView>
      *
      * @return the place controller
      */
-    protected final PlaceController controller()
+    protected PlaceController controller()
     {
         return placeController;
     }

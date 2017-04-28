@@ -1,4 +1,4 @@
-package org.ctoolkit.turnonline.gwt.client.common.presenter;
+package org.ctoolkit.turnonline.gwt.client.presenter;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;

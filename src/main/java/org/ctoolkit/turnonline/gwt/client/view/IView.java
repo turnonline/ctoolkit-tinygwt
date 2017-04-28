@@ -1,9 +1,9 @@
-package org.ctoolkit.turnonline.gwt.client.common.view;
+package org.ctoolkit.turnonline.gwt.client.view;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
 /**
- * The view interface to be used with {@link org.ctoolkit.turnonline.gwt.client.common.presenter.Presenter}.
+ * The view interface to be used with {@link org.ctoolkit.turnonline.gwt.client.presenter.Presenter}.
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
