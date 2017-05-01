@@ -4,17 +4,17 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * The base {@link IView} implementation as composite widget.
+ * The bindery {@link IView} implementation as a composite widget.
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
-public abstract class View
+public abstract class BinderyView
         extends Composite
         implements IView
 {
     private final EventBus eventBus;
 
-    public View( EventBus eventBus )
+    public BinderyView( EventBus eventBus )
     {
         this.eventBus = eventBus;
     }
@@ -24,7 +24,7 @@ public abstract class View
      *
      * @return the singleton event bus
      */
-    protected final EventBus bus()
+    protected EventBus bus()
     {
         return eventBus;
     }

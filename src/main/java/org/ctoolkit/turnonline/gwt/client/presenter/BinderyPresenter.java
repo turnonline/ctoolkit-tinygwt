@@ -6,8 +6,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import org.ctoolkit.turnonline.gwt.client.view.IView;
 
-import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNotNull;
-
 /**
  * The bindery activity presenter implementation. Presenter acts upon the model and the view.
  * It retrieves data from the model and prepares it to be displayed in the view.
@@ -34,6 +32,18 @@ public abstract class BinderyPresenter<V extends IView>
         this.placeController = checkNotNull( placeController );
 
         bind();
+    }
+
+    private <T> T checkNotNull( T reference )
+    {
+        if ( reference == null )
+        {
+            throw new NullPointerException();
+        }
+        else
+        {
+            return reference;
+        }
     }
 
     /**
