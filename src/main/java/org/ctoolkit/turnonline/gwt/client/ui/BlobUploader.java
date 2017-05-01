@@ -46,7 +46,7 @@ public class BlobUploader
 
     private final FormPanel form = new FormPanel();
 
-    OutputFactory ofa = GWT.create( OutputFactory.class );
+    private OutputFactory ofa = GWT.create( OutputFactory.class );
 
     private IconButton button;
 
