@@ -4,6 +4,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.uibinder.client.UiChild;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -84,7 +86,18 @@ public class FieldSet
     }
 
     /**
-     * Constructor of fieldset.
+     * Constructor of collapsable fieldset.
+     *
+     * @param collapsable the boolean value whether to set this fieldset as collapsable
+     */
+    @UiConstructor
+    public FieldSet( boolean collapsable )
+    {
+        this( null, true );
+    }
+
+    /**
+     * Constructor of collapsable fieldset.
      *
      * @param legendText  the legend's text HTML content
      * @param collapsable the boolean value whether to set this fieldset as collapsable
@@ -96,7 +109,10 @@ public class FieldSet
         wrapper.setStyleName( "fieldset-wrapper" );
         captionPanel.add( wrapper );
 
-        legendComponent.setHTML( legendText );
+        if ( legendText != null )
+        {
+            legendComponent.setHTML( legendText );
+        }
         legend.add( legendComponent );
         legend.setStyleName( "title" );
         if ( collapsable )
@@ -141,9 +157,11 @@ public class FieldSet
      * @param label  the label for widget
      * @return the newly created instance of {@link FieldSetRow}
      */
-    public FieldSetRow addFieldSetRow( IsWidget widget, String label )
+    @UiChild( tagname = "row" )
+    public FieldSetRow addRow( IsWidget widget, String label )
     {
-        FieldSetRow fieldSetRow = new FieldSetRow( label, widget );
+        FieldSetRow fieldSetRow = new FieldSetRow( label );
+        fieldSetRow.setWidget( widget );
         add( fieldSetRow );
 
         setEnabledItem( widget );
@@ -152,15 +170,32 @@ public class FieldSet
     }
 
     /**
+     * Adds a child widget to this fieldset as row and displays the label
+     * and component as a block elements, instead of inline-block.
+     *
+     * @param widget the widget to be added as a row
+     * @param label  the label for widget
+     */
+    @UiChild( tagname = "block" )
+    public void addRowAsBlock( IsWidget widget, String label )
+    {
+        addRow( widget, label ).displayAsBlock();
+    }
+
+    /**
      * Adds a child widget wrapped as {@link FieldSetRow} to this fieldset.
      *
      * @param widget the widget to be added
      * @param label  the label for widget
-     * @param note   the tooltip's note
+     * @param tooltip   the tooltip's note
      */
-    public void addFieldSetRow( IsWidget widget, String label, String note )
+    public void addRow( IsWidget widget, String label, String tooltip )
     {
-        add( new FieldSetRow( label, widget ).setTooltip( note ) );
+        FieldSetRow fieldSetRow = new FieldSetRow( label );
+        fieldSetRow.setTooltip( tooltip );
+        fieldSetRow.setWidget( widget );
+
+        add( fieldSetRow );
         setEnabledItem( widget );
     }
 
@@ -171,9 +206,12 @@ public class FieldSet
      * @param label          the label for widget
      * @param componentFirst the boolean value to determine if component will be rendered before label
      */
-    public void addFieldSetRow( IsWidget widget, String label, boolean componentFirst )
+    public void addRow( IsWidget widget, String label, boolean componentFirst )
     {
-        add( new FieldSetRow( label, widget, componentFirst ) );
+        FieldSetRow fieldSetRow = new FieldSetRow( label, componentFirst );
+        fieldSetRow.setWidget( widget );
+
+        add( fieldSetRow );
         setEnabledItem( widget );
     }
 

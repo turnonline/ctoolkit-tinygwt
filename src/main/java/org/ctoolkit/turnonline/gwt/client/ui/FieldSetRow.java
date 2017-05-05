@@ -7,6 +7,8 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.uibinder.client.UiChild;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -72,18 +74,30 @@ public class FieldSetRow
      */
     public FieldSetRow()
     {
-        this( null, null, false );
+        this( null, false );
     }
 
     /**
      * Constructs a new {@link FieldSetRow} with label and component.
      *
      * @param labelText the HTML text content as label for widget
-     * @param widget    any widget that implements {@link com.google.gwt.user.client.ui.IsWidget} interface
      */
-    public FieldSetRow( String labelText, IsWidget widget )
+    public FieldSetRow( String labelText )
     {
-        this( labelText, widget, false );
+        this( labelText, false );
+    }
+
+    /**
+     * Constructs a new {@link FieldSetRow} component.
+     *
+     * @param componentFirst the boolean value to determine if component will be rendered before label.
+     *                       If is set to <code>true</code> component will be rendered first,
+     *                       if is set to <code>false</code> component will be rendered after label
+     */
+    @UiConstructor
+    public FieldSetRow( boolean componentFirst )
+    {
+        this( null, componentFirst );
     }
 
     /**
@@ -91,12 +105,11 @@ public class FieldSetRow
      * ComponentFirst attribute determine the position of label/component.
      *
      * @param labelText      the HTML text content as label for widget
-     * @param widget         any widget that implements {@link com.google.gwt.user.client.ui.IsWidget} interface
      * @param componentFirst the boolean value to determine if component will be rendered before label.
      *                       If is set to <code>true</code> component will be rendered first,
      *                       if is set to <code>false</code> component will be rendered after label
      */
-    public FieldSetRow( String labelText, IsWidget widget, boolean componentFirst )
+    public FieldSetRow( String labelText, boolean componentFirst )
     {
         this.componentFirst = componentFirst;
         initWidget( formRow );
@@ -106,10 +119,6 @@ public class FieldSetRow
         {
             setLabelText( labelText );
         }
-        if ( widget != null )
-        {
-            setWidget( widget );
-        }
         component.setStyleName( "component" );
 
         label.setStyleName( "label" );
@@ -117,13 +126,13 @@ public class FieldSetRow
         if ( componentFirst )
         {
             addStyleName( "component-first" );
-            add( component );
-            add( label );
+            addRowWidget( component );
+            addRowWidget( label );
         }
         else
         {
-            add( label );
-            add( component );
+            addRowWidget( label );
+            addRowWidget( component );
         }
     }
 
@@ -132,6 +141,7 @@ public class FieldSetRow
      *
      * @param widget the widget to be set
      */
+    @UiChild( tagname = "widget", limit = 1 )
     public void setWidget( IsWidget widget )
     {
         component.add( widget );
@@ -141,22 +151,19 @@ public class FieldSetRow
      * Adds a widget to this row.
      *
      * @param widget the widget to be added
-     * @return instance of {@link FieldSetRow}
      */
-    public FieldSetRow add( IsWidget widget )
+    @UiChild( tagname = "rowWidget" )
+    public void addRowWidget( IsWidget widget )
     {
         formRow.add( widget );
-
-        return this;
     }
 
     /**
      * Sets the HTML text content as label for widget.
      *
      * @param text the HTML text content
-     * @return instance of {@link FieldSetRow}
      */
-    public FieldSetRow setLabelText( String text )
+    public void setLabelText( String text )
     {
         if ( text == null )
         {
@@ -166,52 +173,42 @@ public class FieldSetRow
         {
             label.setHTML( text + ( componentFirst ? "" : LABEL_SEPARATOR ) );
         }
-
-        return this;
     }
 
     /**
      * Sets row note.
      *
      * @param text the row note text
-     * @return instance of {@link FieldSetRow}
      */
-    public FieldSetRow setNote( String text )
+    public void setNote( String text )
     {
         if ( note == null )
         {
             note = new HTML( text );
             note.setStyleName( "note" );
-            add( note );
+            addRowWidget( note );
         }
 
         note.setText( text );
-
-        return this;
     }
 
     /**
      * Displays label and component as block elements, instead of inline-block.
-     *
-     * @return instance of {@link FieldSetRow}
      */
-    public FieldSetRow displayAsBlock()
+    public void displayAsBlock()
     {
         FlowPanel clearer = new FlowPanel();
         clearer.getElement().setAttribute( "style", "clear:both;" );
 
         label.getParent().getElement().insertAfter( clearer.getElement(), label.getElement() );
-
-        return this;
     }
 
     /**
      * Sets note for fieldset row and appends it at the end of the fieldset row.
      *
      * @param text the text to be set as a note
-     * @return instance of {@link FieldSetRow}
      */
-    public FieldSetRow setTooltip( String text )
+    public void setTooltip( String text )
     {
         HTML tooltip = new HTML();
         tooltip.setStyleName( "tooltip" );
@@ -237,8 +234,6 @@ public class FieldSetRow
                 showTooltipText( false );
             }
         } );
-
-        return this;
     }
 
     private void createTooltipText()

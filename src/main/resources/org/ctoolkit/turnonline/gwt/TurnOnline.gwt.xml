@@ -4,7 +4,6 @@
 
 <module rename-to="turnonline.gwt">
     <inherits name="com.google.gwt.user.User"/>
-    <inherits name="com.google.gwt.inject.Inject"/>
     <inherits name="com.google.gwt.activity.Activity"/>
     <inherits name="com.google.web.bindery.autobean.AutoBean"/>
     <inherits name="com.google.web.bindery.requestfactory.RequestFactory"/>
