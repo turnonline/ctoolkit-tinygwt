@@ -93,7 +93,7 @@ public class FieldSet
     @UiConstructor
     public FieldSet( boolean collapsable )
     {
-        this( null, true );
+        this( null, collapsable );
     }
 
     /**
