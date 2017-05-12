@@ -107,10 +107,11 @@ public abstract class BinderyPresenter<V extends IView>
     /**
      * Call this method once backing object is fully loaded from backend and its data are ready to be shown.
      * You need to call this method on your own because of asynchronous behavior of getting backing object.
-     * It will show view with prepared data and view components.
+     * It will show associated view with prepared data and optionally decorate view components.
      */
     protected void onAfterBackingObject()
     {
+        view.decorate();
         view.show();
         this.root.setWidget( view );
     }
