@@ -1,6 +1,5 @@
 /*
- * Comvai GWT, Comvai specific GWT components
- * Copyright (C) 2012 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
