@@ -38,7 +38,6 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
-import com.google.web.bindery.event.shared.EventBus;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -47,8 +46,6 @@ import java.util.Map;
 
 /**
  * <p>A <code>CellTable</code> wrapper bundled together with {@link TablePager}.</p>
- * <p>This table breaks MVP pattern, because backend is called internally to update data provider.
- * (That`s the reason why {@link EventBus} is used in constructor). All you need to implement is {@link Table#getAction()} method</p>
  *
  * @author <a href="mailto:jozef.pohorelec@ctoolkit.org">Jozef Pohorelec</a>
  */
@@ -62,17 +59,17 @@ public abstract class Table<T>
 
     private static final String DEFAULT_TABLE_WIDTH = "100%";
 
+    TableDataProvider<T> dataProvider;
+
     private CellTable<T> table = new CellTable<T>( DEFAULT_PAGE_SIZE, new ResourceProxy() );
 
     private int iconColumns = 0;
-
-    private TableDataProvider<T> dataProvider;
 
     private boolean displayAdded = false;
 
     private Map<Column, String> sortableColumns = new HashMap<Column, String>();
 
-    public Table( EventBus eventBus )
+    public Table()
     {
         super();
 
@@ -115,29 +112,10 @@ public abstract class Table<T>
         };
 
         table.addColumnSortHandler( new ColumnSortEvent.AsyncHandler( table ) );
-
-        eventBus.addHandler( TableUpdateRowDataEvent.TYPE, new TableUpdateRowDataEventHandler()
-        {
-            @Override
-            public void onUpdateRowData( TableUpdateRowDataEvent event )
-            {
-                dataProvider.updateRowData( event.getStart(), event.<T>getList() );
-            }
-        } );
-
-        eventBus.addHandler( TableUpdateRowDataExceptionEvent.TYPE, new TableUpdateRowDataExceptionEventHandler()
-        {
-            @Override
-            public void onException( TableUpdateRowDataExceptionEvent event )
-            {
-                reset();
-            }
-        } );
     }
 
-    public Table( int pageSize, EventBus eventBus )
+    public Table( int pageSize )
     {
-        this( eventBus );
         table.setPageSize( pageSize );
     }
 
