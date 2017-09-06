@@ -35,11 +35,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class UpdateDataRequestEvent<R, H extends EventHandler>
         extends GwtEvent<H>
 {
-    private final Table<R> table;
+    private final DataUpdateHandler<R> updateHandler;
 
-    protected UpdateDataRequestEvent( Table<R> table )
+    protected UpdateDataRequestEvent( DataUpdateHandler<R> updateHandler )
     {
-        this.table = checkNotNull( table );
+        this.updateHandler = checkNotNull( updateHandler );
     }
 
     /**
@@ -54,14 +54,14 @@ public abstract class UpdateDataRequestEvent<R, H extends EventHandler>
      */
     public void successCallback( List<R> response )
     {
-        table.dataProvider.updateRowData( start(), response );
+        updateHandler.updateRowData( start(), response );
     }
 
     /**
-     * Callback that will reset table's rows.
+     * Callback that will clear table's rows.
      */
     public void failureCallback()
     {
-        table.reset();
+        updateHandler.clear();
     }
 }

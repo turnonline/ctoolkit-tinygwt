@@ -51,7 +51,7 @@ import java.util.Map;
  */
 public abstract class Table<T>
         extends Composite
-        implements HasData<T>, Focusable, HasKeyboardPagingPolicy
+        implements HasData<T>, DataUpdateHandler<T>, Focusable, HasKeyboardPagingPolicy
 {
     public static final String EVENT_CLICK = "click";
 
@@ -59,7 +59,7 @@ public abstract class Table<T>
 
     private static final String DEFAULT_TABLE_WIDTH = "100%";
 
-    TableDataProvider<T> dataProvider;
+    private TableDataProvider<T> dataProvider;
 
     private CellTable<T> table = new CellTable<T>( DEFAULT_PAGE_SIZE, new ResourceProxy() );
 
@@ -140,7 +140,13 @@ public abstract class Table<T>
         getCellTable().setVisibleRangeAndClearData( new Range( table.getPageStart(), table.getPageSize() ), true );
     }
 
-    public void reset()
+    @Override
+    public void updateRowData( int start, List<T> values )
+    {
+        dataProvider.updateRowData( start, values );
+    }
+
+    public void clear()
     {
         getCellTable().setVisibleRangeAndClearData( new Range( 0, table.getPageSize() ), true );
     }
