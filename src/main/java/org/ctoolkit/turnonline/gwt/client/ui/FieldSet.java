@@ -33,7 +33,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * A fieldset as GWT element.
@@ -84,6 +86,8 @@ public class FieldSet
     private boolean enabled = true;
 
     private boolean collapsed = false;
+
+    private Map<IsWidget, FieldSetRow> rowsMap = new HashMap<>();
 
     /**
      * Constructor of collapsable fieldset.
@@ -162,6 +166,7 @@ public class FieldSet
      *
      * @param widget the widget to be added
      */
+    @UiChild( tagname = "widget" )
     public void add( Widget widget )
     {
         content.add( widget );
@@ -180,8 +185,9 @@ public class FieldSet
     {
         FieldSetRow fieldSetRow = new FieldSetRow( label );
         fieldSetRow.setWidget( widget );
-        add( fieldSetRow );
 
+        add( fieldSetRow );
+        rowsMap.put( widget, fieldSetRow );
         setEnabledItem( widget );
 
         return fieldSetRow;
@@ -203,9 +209,9 @@ public class FieldSet
     /**
      * Adds a child widget wrapped as {@link FieldSetRow} to this fieldset.
      *
-     * @param widget the widget to be added
-     * @param label  the label for widget
-     * @param tooltip   the tooltip's note
+     * @param widget  the widget to be added
+     * @param label   the label for widget
+     * @param tooltip the tooltip's note
      */
     public void addRow( IsWidget widget, String label, String tooltip )
     {
@@ -214,6 +220,7 @@ public class FieldSet
         fieldSetRow.setWidget( widget );
 
         add( fieldSetRow );
+        rowsMap.put( widget, fieldSetRow );
         setEnabledItem( widget );
     }
 
@@ -230,7 +237,19 @@ public class FieldSet
         fieldSetRow.setWidget( widget );
 
         add( fieldSetRow );
+        rowsMap.put( widget, fieldSetRow );
         setEnabledItem( widget );
+    }
+
+    /**
+     * Returns associated {@link FieldSetRow} to the given widget.
+     *
+     * @param widget the widget
+     * @return the associated row instance
+     */
+    public FieldSetRow findRow( IsWidget widget )
+    {
+        return rowsMap.get( widget );
     }
 
     /**
