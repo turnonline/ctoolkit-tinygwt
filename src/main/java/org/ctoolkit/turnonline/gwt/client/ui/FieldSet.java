@@ -141,14 +141,9 @@ public class FieldSet
         {
             legend.addStyleName( "collapsable" );
 
-            legend.addClickHandler( new ClickHandler()
-            {
-                @Override
-                public void onClick( ClickEvent event )
-                {
-                    toggle();
-                }
-            } );
+            legend.addClickHandler( event -> toggle() );
+            // collapsed by default
+            collapse();
         }
         wrapper.add( legend );
 
