@@ -234,24 +234,12 @@ public class FieldSetRow
 
         this.text = text;
 
-        tooltip.addMouseOverHandler( new MouseOverHandler()
-        {
-            @Override
-            public void onMouseOver( MouseOverEvent mouseOverEvent )
-            {
-                createTooltipText();
-                showTooltipText( true );
-            }
+        tooltip.addMouseOverHandler( mouseOverEvent -> {
+            createTooltipText();
+            showTooltipText( true );
         } );
 
-        tooltip.addMouseOutHandler( new MouseOutHandler()
-        {
-            @Override
-            public void onMouseOut( MouseOutEvent mouseOutEvent )
-            {
-                showTooltipText( false );
-            }
-        } );
+        tooltip.addMouseOutHandler( mouseOutEvent -> showTooltipText( false ) );
     }
 
     private void createTooltipText()
@@ -263,23 +251,9 @@ public class FieldSetRow
             tooltipText.setStyleName( "tooltip-text" );
             tooltipText.add( new HTML( text ) );
 
-            tooltipText.addMouseOverHandler( new MouseOverHandler()
-            {
-                @Override
-                public void onMouseOver( MouseOverEvent mouseOverEvent )
-                {
-                    showTooltipText( true );
-                }
-            } );
+            tooltipText.addMouseOverHandler( mouseOverEvent -> showTooltipText( true ) );
 
-            tooltipText.addMouseOutHandler( new MouseOutHandler()
-            {
-                @Override
-                public void onMouseOut( MouseOutEvent mouseOutEvent )
-                {
-                    showTooltipText( false );
-                }
-            } );
+            tooltipText.addMouseOutHandler( mouseOutEvent -> showTooltipText( false ) );
 
             formRow.add( tooltipText );
         }

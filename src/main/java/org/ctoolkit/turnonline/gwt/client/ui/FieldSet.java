@@ -225,15 +225,16 @@ public class FieldSet
     }
 
     /**
-     * Adds a child widget wrapped as {@link FieldSetRow} to this fieldset.
+     * Adds a child widget wrapped as {@link FieldSetRow} to this fieldset
+     * where component will be rendered first and label as second.
      *
-     * @param widget         the widget to be added
-     * @param label          the label for widget
-     * @param componentFirst the boolean value to determine if component will be rendered before label
+     * @param widget the widget to be added
+     * @param label  the label for widget
      */
-    public void addRow( IsWidget widget, String label, boolean componentFirst )
+    @UiChild( tagname = "rowWidgetFirst" )
+    public void addRowComponentFirst( IsWidget widget, String label )
     {
-        FieldSetRow fieldSetRow = new FieldSetRow( label, componentFirst );
+        FieldSetRow fieldSetRow = new FieldSetRow( label, true );
         fieldSetRow.setWidget( widget );
 
         add( fieldSetRow );
