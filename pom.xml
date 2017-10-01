@@ -26,23 +26,23 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.ctoolkit.turnonline</groupId>
-    <artifactId>turnonline-gwt</artifactId>
+    <groupId>org.ctoolkit.gwt</groupId>
+    <artifactId>ctoolkit-tinygwt</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>TurnOnline.biz GWT components</name>
-    <description>TurnOnline.biz GWT components</description>
-    <url>https://github.com/turnonline/turnonline-gwt</url>
+    <name>CtoolkiT tiny GWT components</name>
+    <description>GWT MVP tiny components and UI widgets incl. inter module event bus.</description>
+    <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
 
     <scm>
-        <connection>scm:git:[fetch=]git@github.com:turnonline/turnonline-gwt.git</connection>
-        <developerConnection>scm:git:[push=]git@github.com:turnonline/turnonline-gwt.git</developerConnection>
-        <url>https://github.com/turnonline/turnonline-gwt</url>
+        <connection>scm:git:[fetch=]git@github.com:turnonline/ctoolkit-tinygwt.git</connection>
+        <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-tinygwt.git</developerConnection>
+        <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
         <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/turnonline/turnonline-gwt/issues</url>
+        <url>https://github.com/turnonline/ctoolkit-tinygwt/issues</url>
     </issueManagement>
 
     <developers>
@@ -77,8 +77,8 @@
                     <execution>
                         <configuration>
                             <modules>
-                                <module>org.ctoolkit.turnonline.gwt.InterAppEventBus</module>
-                                <module>org.ctoolkit.turnonline.gwt.TurnOnline</module>
+                                <module>org.ctoolkit.gwt.InterAppEventBus</module>
+                                <module>org.ctoolkit.gwt.TinyGwt</module>
                             </modules>
                         </configuration>
                         <goals>
