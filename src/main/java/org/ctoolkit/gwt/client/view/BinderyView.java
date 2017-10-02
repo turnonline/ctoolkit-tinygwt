@@ -77,7 +77,10 @@ public abstract class BinderyView
      */
     public void clearDecorators()
     {
-        decorators.clear();
+        if ( decorators != null )
+        {
+            decorators.clear();
+        }
     }
 
     @Override
