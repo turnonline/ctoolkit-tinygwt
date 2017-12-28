@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
-public abstract class BinderyView
+public class BinderyView
         extends Composite
         implements IView
 {
@@ -81,6 +81,18 @@ public abstract class BinderyView
         {
             decorators.clear();
         }
+    }
+
+    @Override
+    public void show()
+    {
+        setVisible( true );
+    }
+
+    @Override
+    public void hide()
+    {
+        setVisible( false );
     }
 
     @Override
