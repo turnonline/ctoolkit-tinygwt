@@ -7,7 +7,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
-class UploadResponse
+public class UploadResponse
         extends JavaScriptObject
 {
     protected UploadResponse()
