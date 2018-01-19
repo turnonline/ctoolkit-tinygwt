@@ -51,6 +51,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanFactory;
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  * @author <a href="mailto:jozef.pohorelec@ctoolkit.org">Jozef Pohorelec</a>
  */
+@Deprecated
 public class BlobUploader
         extends Composite
 {

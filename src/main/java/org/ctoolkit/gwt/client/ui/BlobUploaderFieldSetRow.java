@@ -43,6 +43,7 @@ import com.google.gwt.user.client.ui.Label;
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  * @author <a href="mailto:jozef.pohorelec@ctoolkit.org">Jozef Pohorelec</a>
  */
+@Deprecated
 public class BlobUploaderFieldSetRow
         extends Composite
 {
