@@ -37,24 +37,48 @@ public class IconCell<C>
 
     private final Delegate<C> delegate;
 
-    private final String buttonClassName;
+    private String tooltip;
+
+    /**
+     * Construct a new {@link IconCell}.
+     *
+     * @param className name of specified icon class
+     * @param delegate  the delegate that will handle events
+     */
+    public IconCell( String className, Delegate<C> delegate )
+    {
+        this( className, "", null, delegate );
+    }
+
+    /**
+     * Construct a new {@link IconCell}.
+     *
+     * @param className name of specified icon class
+     * @param tooltip   cell tooltip
+     * @param delegate  the delegate that will handle events
+     */
+    public IconCell( String className, String tooltip, Delegate<C> delegate )
+    {
+        this( className, "", tooltip, delegate );
+    }
 
     /**
      * Construct a new {@link IconCell}.
      *
      * @param className         name of specified icon class
      * @param classNameDisabled name of specified disabled icon class
-     * @param buttonClassName   the style name to style the button
+     * @param tooltip           cell tooltip
      * @param delegate          the delegate that will handle events
      */
-    public IconCell( String className, String classNameDisabled, String buttonClassName, Delegate<C> delegate )
+    public IconCell( String className, String classNameDisabled, String tooltip, Delegate<C> delegate )
     {
         super( "click", "keydown" );
         this.delegate = delegate;
 
         this.className = className;
         this.classNameDisabled = classNameDisabled;
-        this.buttonClassName = buttonClassName;
+
+        this.tooltip = tooltip;
     }
 
     @Override
@@ -80,18 +104,22 @@ public class IconCell<C>
     @Override
     public void render( Context context, C value, SafeHtmlBuilder sb )
     {
+        onBeforeRender( context, value, sb );
+
         if ( delegate.isExecutable( value ) )
         {
             sb.append( new SafeHtmlBuilder().appendHtmlConstant(
-                    "<button type=\"button\" tabindex=\"-1\" class=\"" + buttonClassName + " " + className + "\">" )
+                    "<button type=\"button\" tabindex=\"-1\" class=\"" + " " + className + "\">" )
                     .appendHtmlConstant( "</button>" ).toSafeHtml() );
         }
         else
         {
             sb.append( new SafeHtmlBuilder().appendHtmlConstant(
-                    "<button type=\"button\" tabindex=\"-1\" class=\"" + buttonClassName + " " + classNameDisabled + "\">" )
+                    "<button type=\"button\" tabindex=\"-1\" class=\"" + " " + classNameDisabled + "\">" )
                     .appendHtmlConstant( "</button>" ).toSafeHtml() );
         }
+
+        onAfterRender( context, value, sb );
     }
 
     @Override
@@ -101,6 +129,22 @@ public class IconCell<C>
         if ( delegate.isExecutable( value ) )
         {
             delegate.execute( value );
+        }
+    }
+
+    protected void onBeforeRender( Context context, C value, SafeHtmlBuilder sb )
+    {
+        if ( tooltip != null )
+        {
+            sb.appendHtmlConstant( "<i title='" + tooltip + "'>" );
+        }
+    }
+
+    protected void onAfterRender( Context context, C value, SafeHtmlBuilder sb )
+    {
+        if ( tooltip != null )
+        {
+            sb.appendHtmlConstant( "</i>" );
         }
     }
 

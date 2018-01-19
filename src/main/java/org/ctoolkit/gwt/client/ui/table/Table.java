@@ -61,7 +61,7 @@ public abstract class Table<T>
 
     private TableDataProvider<T> dataProvider;
 
-    private CellTable<T> table = new CellTable<>( DEFAULT_PAGE_SIZE, new ResourceProxy() );
+    private CellTable<T> table;
 
     private int iconColumns = 0;
 
@@ -71,24 +71,34 @@ public abstract class Table<T>
 
     public Table()
     {
-        super();
+        this( DEFAULT_PAGE_SIZE );
+    }
 
+    public Table( int pageSize )
+    {
         FlowPanel panel = new FlowPanel();
 
+        table = new CellTable<>( pageSize, newResources() );
         table.setWidth( DEFAULT_TABLE_WIDTH );
 
-        TablePager pager = new TablePager( TablePager.TextLocation.LEFT );
-        pager.setDisplay( table );
-
-        FlowPanel headerPanel = new FlowPanel();
-        headerPanel.setStyleName( "table-header-panel" );
-        panel.add( headerPanel );
-
-        headerPanel.add( pager );
+        // header
+        FlowPanel headerPanel = newHeaderPanel();
+        if ( headerPanel != null )
+        {
+            panel.add( headerPanel );
+        }
 
         panel.add( table );
 
+        // table
         initWidget( panel );
+
+        //footer
+        FlowPanel footerPanel = newFooterPanel();
+        if ( footerPanel != null )
+        {
+            panel.add( footerPanel );
+        }
 
         dataProvider = new TableDataProvider<T>()
         {
@@ -114,11 +124,6 @@ public abstract class Table<T>
         table.addColumnSortHandler( new ColumnSortEvent.AsyncHandler( table ) );
     }
 
-    public Table( int pageSize )
-    {
-        table.setPageSize( pageSize );
-    }
-
     public void addSortableColumn( String name, Column column )
     {
         sortableColumns.put( column, name );
@@ -137,7 +142,35 @@ public abstract class Table<T>
             dataProvider.addDataDisplay( this );
             displayAdded = true;
         }
-        getCellTable().setVisibleRangeAndClearData( new Range( table.getPageStart(), table.getPageSize() ), true );
+        else
+        {
+            getCellTable().setVisibleRange( new Range( table.getPageStart(), table.getPageSize() ) );
+            RangeChangeEvent.fire( getCellTable(), getVisibleRange() );
+        }
+    }
+
+    public void reset()
+    {
+        getCellTable().setVisibleRange( new Range( 0, table.getPageSize() ) );
+        RangeChangeEvent.fire( getCellTable(), getVisibleRange() );
+    }
+
+    protected FlowPanel newHeaderPanel()
+    {
+        TablePager pager = new TablePager( TablePager.TextLocation.LEFT );
+        pager.setDisplay( table );
+
+        FlowPanel headerPanel = new FlowPanel();
+        headerPanel.setStyleName( "table-header-root" );
+
+        headerPanel.add( pager );
+
+        return headerPanel;
+    }
+
+    protected FlowPanel newFooterPanel()
+    {
+        return null;
     }
 
     @Override
@@ -171,6 +204,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col )
     {
         table.addColumn( col );
+        incrementIconColumns( col );
     }
 
     /**
@@ -182,6 +216,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, Header<?> header )
     {
         table.addColumn( col, header );
+        incrementIconColumns( col );
     }
 
     /**
@@ -194,6 +229,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, Header<?> header, Header<?> footer )
     {
         table.addColumn( col, header, footer );
+        incrementIconColumns( col );
     }
 
     /**
@@ -205,6 +241,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, String headerString )
     {
         table.addColumn( col, headerString );
+        incrementIconColumns( col );
     }
 
     /**
@@ -217,6 +254,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, SafeHtml headerHtml )
     {
         table.addColumn( col, headerHtml );
+        incrementIconColumns( col );
     }
 
     /**
@@ -230,6 +268,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, String headerString, String footerString )
     {
         table.addColumn( col, headerString, footerString );
+        incrementIconColumns( col );
     }
 
     /**
@@ -243,6 +282,7 @@ public abstract class Table<T>
     public void addColumn( Column<T, ?> col, SafeHtml headerHtml, SafeHtml footerHtml )
     {
         table.addColumn( col, headerHtml, footerHtml );
+        incrementIconColumns( col );
     }
 
     /**
@@ -253,7 +293,9 @@ public abstract class Table<T>
      * @param classNameDisabled name of specified disabled icon class
      *                          String buttonClassName,
      * @param delegate          the delegate that will handle events from the cell.
+     * @Deprecated use {@link Table#addColumn(new IconColumn)} instead
      */
+    @Deprecated
     public void addIconColumn( String className,
                                String classNameDisabled,
                                String buttonClassName,
@@ -270,7 +312,9 @@ public abstract class Table<T>
      * @param classNameDisabled name of specified disabled icon class
      * @param buttonClassName   the style name to style the button
      * @param delegate          the delegate that will handle events from the cell.
+     * @Deprecated use {@link Table#addColumn(new IconColumn, new Header())} instead
      */
+    @Deprecated
     public void addIconColumn( String className,
                                String classNameDisabled,
                                String buttonClassName,
@@ -287,6 +331,11 @@ public abstract class Table<T>
         }, header );
 
         iconColumns++;
+    }
+
+    public TableDataProvider<T> getDataProvider()
+    {
+        return dataProvider;
     }
 
     public void setRowCount( int size, boolean isExact )
@@ -543,6 +592,11 @@ public abstract class Table<T>
         }
     }
 
+    protected CellTable.Resources newResources()
+    {
+        return new ResourceProxy();
+    }
+
     public static class ResourceProxy
             implements CellTable.Resources
     {
@@ -767,6 +821,19 @@ public abstract class Table<T>
         public String getName()
         {
             return null;
+        }
+    }
+
+    /**
+     * Increment iconColumns field if column is type of {@link IconColumn}
+     *
+     * @param col column
+     */
+    private void incrementIconColumns( Column<T, ?> col )
+    {
+        if ( col instanceof IconColumn )
+        {
+            iconColumns++;
         }
     }
 }
