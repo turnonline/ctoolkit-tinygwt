@@ -1,0 +1,147 @@
+/*
+ * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+package org.ctoolkit.gwt.client.facade;
+
+import com.google.common.base.Strings;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The request builder that populates header with Firebase id token.
+ * Prerequisite is to have a Firebase correctly initialized with authenticated user.
+ * {@code firebase.auth().currentUser;} must return a valid user.
+ *
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
+ */
+public class FirebaseAuthRequestBuilder
+{
+    private static Map<String, RequestBuilder> calls = new HashMap<>();
+
+    private String token;
+
+    private JavaScriptObject currentUser;
+
+    public FirebaseAuthRequestBuilder()
+    {
+    }
+
+    private void fireTokenRetrieval( String key )
+    {
+        if ( currentUser == null )
+        {
+            currentUser = getCurrentUser();
+        }
+
+        if ( currentUser != null )
+        {
+            getToken( currentUser, this, key );
+        }
+    }
+
+    private native JavaScriptObject getCurrentUser()/*-{
+        return $wnd.firebase.auth().currentUser;
+    }-*/;
+
+    private native void getToken( final JavaScriptObject user, final Object instance, String key )
+        /*-{
+            user.getIdToken().then( function ( currentToken ) {
+                if ( currentToken )
+                {
+                    instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
+                }
+            } )
+
+        }-*/;
+
+    private void onTokenReceived( final String idToken, final String key )
+    {
+        token = idToken;
+
+        if ( token != null && key != null )
+        {
+            RequestBuilder builder = calls.get( key );
+            if ( builder != null )
+            {
+                Scheduler.get().scheduleDeferred( () -> {
+                    try
+                    {
+                        populateAuthorization( builder, token );
+                        builder.send();
+                        calls.remove( key );
+                    }
+                    catch ( RequestException e )
+                    {
+                        resetToken();
+                    }
+                } );
+            }
+        }
+    }
+
+    /**
+     * Sends a HTTP request based on the current builder configuration
+     * populated with Firebase id token if current user has been found.
+     *
+     * @param builder the request builder instance
+     * @return the {@link Request} object that can be used to track the request
+     */
+    public Request sendRequest( RequestBuilder builder ) throws RequestException
+    {
+        if ( Strings.isNullOrEmpty( token ) )
+        {
+            String key = builder.getUrl();
+            calls.put( key, builder );
+
+            fireTokenRetrieval( key );
+            return null;
+        }
+        else
+        {
+            populateAuthorization( builder, token );
+            return builder.send();
+        }
+    }
+
+    /**
+     * Sets the current user to {@code null}.
+     */
+    public void resetCurrentUser()
+    {
+        currentUser = null;
+    }
+
+    /**
+     * Sets the current ID token to {@code null}.
+     */
+    public void resetToken()
+    {
+        token = null;
+    }
+
+    private void populateAuthorization( RequestBuilder builder, String token )
+    {
+        builder.setHeader( "Authorization", "Bearer " + token );
+    }
+}
