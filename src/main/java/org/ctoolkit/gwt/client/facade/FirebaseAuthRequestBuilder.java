@@ -19,7 +19,6 @@
 package org.ctoolkit.gwt.client.facade;
 
 import com.google.common.base.Strings;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -31,7 +30,8 @@ import java.util.Map;
 /**
  * The request builder that populates header with Firebase id token.
  * Prerequisite is to have a Firebase correctly initialized with authenticated user.
- * {@code firebase.auth().currentUser;} must return a valid user.
+ * {@code firebase.auth().currentUser;} must return a valid user. If returns null, call
+ * is executed without authorization header
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
@@ -41,45 +41,32 @@ public class FirebaseAuthRequestBuilder
 
     private String token;
 
-    private JavaScriptObject currentUser;
+    protected native void fireTokenRetrieval( final FirebaseAuthRequestBuilder instance, String key ) /*-{
+        var firebase = $wnd.firebase;
 
-    public FirebaseAuthRequestBuilder()
-    {
-    }
-
-    private void fireTokenRetrieval( String key )
-    {
-        if ( currentUser == null )
+        // firebase is initialized
+        if ( firebase )
         {
-            currentUser = getCurrentUser();
+            var user = firebase.auth().currentUser;
+            if ( user )
+            {
+                user.getIdToken().then( function ( currentToken ) {
+                    if ( currentToken )
+                    {
+                        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
+                    }
+                } );
+            }
         }
 
-        if ( currentUser != null )
-        {
-            getToken( currentUser, this, key );
-        }
-    }
-
-    private native JavaScriptObject getCurrentUser()/*-{
-        return $wnd.firebase.auth().currentUser;
+        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
     }-*/;
 
-    private native void getToken( final JavaScriptObject user, final Object instance, String key )
-        /*-{
-            user.getIdToken().then( function ( currentToken ) {
-                if ( currentToken )
-                {
-                    instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
-                }
-            } )
-
-        }-*/;
-
-    private void onTokenReceived( final String idToken, final String key )
+    protected void onTokenReceived( final String idToken, final String key )
     {
         token = idToken;
 
-        if ( token != null && key != null )
+        if ( key != null )
         {
             RequestBuilder builder = calls.get( key );
             if ( builder != null )
@@ -87,7 +74,10 @@ public class FirebaseAuthRequestBuilder
                 Scheduler.get().scheduleDeferred( () -> {
                     try
                     {
-                        populateAuthorization( builder, token );
+                        if ( token != null )
+                        {
+                            populateAuthorization( builder, token );
+                        }
                         builder.send();
                         calls.remove( key );
                     }
@@ -107,14 +97,14 @@ public class FirebaseAuthRequestBuilder
      * @param builder the request builder instance
      * @return the {@link Request} object that can be used to track the request
      */
-    public Request sendRequest( RequestBuilder builder ) throws RequestException
+    protected Request sendRequest( RequestBuilder builder ) throws RequestException
     {
         if ( Strings.isNullOrEmpty( token ) )
         {
             String key = builder.getUrl();
             calls.put( key, builder );
 
-            fireTokenRetrieval( key );
+            fireTokenRetrieval( this, key );
             return null;
         }
         else
@@ -125,22 +115,14 @@ public class FirebaseAuthRequestBuilder
     }
 
     /**
-     * Sets the current user to {@code null}.
-     */
-    public void resetCurrentUser()
-    {
-        currentUser = null;
-    }
-
-    /**
      * Sets the current ID token to {@code null}.
      */
-    public void resetToken()
+    protected void resetToken()
     {
         token = null;
     }
 
-    private void populateAuthorization( RequestBuilder builder, String token )
+    protected void populateAuthorization( RequestBuilder builder, String token )
     {
         builder.setHeader( "Authorization", "Bearer " + token );
     }
