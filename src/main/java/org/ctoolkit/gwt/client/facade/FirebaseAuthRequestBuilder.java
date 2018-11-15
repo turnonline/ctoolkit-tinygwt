@@ -57,9 +57,15 @@ public class FirebaseAuthRequestBuilder
                     }
                 } );
             }
+            else
+            {
+                instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+            }
         }
-
-        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+        else
+        {
+            instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+        }
     }-*/;
 
     protected void onTokenReceived( final String idToken, final String key )
