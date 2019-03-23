@@ -18,7 +18,6 @@
 
 package org.ctoolkit.gwt.client.facade;
 
-import com.google.common.base.Strings;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -105,7 +104,7 @@ public class FirebaseAuthRequestBuilder
      */
     protected Request sendRequest( RequestBuilder builder ) throws RequestException
     {
-        if ( Strings.isNullOrEmpty( token ) )
+        if ( token == null || token.isEmpty() )
         {
             String key = builder.getUrl();
             calls.put( key, builder );
