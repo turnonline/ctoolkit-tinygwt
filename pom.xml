@@ -31,7 +31,7 @@
     <version>0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>CtoolkiT tiny GWT components</name>
-    <description>GWT MVP tiny components and UI widgets incl. inter module event bus.</description>
+    <description>GWT MVP tiny components incl. inter module event bus.</description>
     <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
 
     <scm>
@@ -108,13 +108,6 @@
         <dependencies>
             <dependency>
                 <groupId>org.ctoolkit.maven</groupId>
-                <artifactId>ctoolkit-library-bom</artifactId>
-                <version>${ctoolkit-library-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ctoolkit.maven</groupId>
                 <artifactId>gwt-bom</artifactId>
                 <version>${gwt-bom.version}</version>
                 <type>pom</type>
@@ -150,7 +143,6 @@
     </dependencies>
 
     <properties>
-        <ctoolkit-library-bom.version>10</ctoolkit-library-bom.version>
         <gwt-bom.version>2.8.1</gwt-bom.version>
         <gwt-plugin.version>2.8.1</gwt-plugin.version>
         <testng.version>6.11</testng.version>
