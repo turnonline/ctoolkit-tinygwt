@@ -23,7 +23,7 @@ import com.google.gwt.event.shared.GwtEvent;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNotNull;
 
 /**
  * Root of all list based table data update request.

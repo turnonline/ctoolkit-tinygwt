@@ -19,26 +19,26 @@
 package org.ctoolkit.gwt.client.presenter;
 
 import com.google.gwt.place.shared.PlaceController;
-import org.ctoolkit.gwt.client.event.CachedEventBus;
+import com.google.web.bindery.event.shared.EventBus;
 import org.ctoolkit.gwt.client.view.IView;
 
 /**
- * Specific presenter injecting customized {@link CachedEventBus}.
+ * Specific presenter injecting customized {@link EventBus}.
  *
  * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
  */
 public abstract class Presenter<V extends IView>
         extends BinderyPresenter<V>
 {
-    public Presenter( CachedEventBus eventBus, V view, PlaceController placeController )
+    public Presenter( EventBus eventBus, V view, PlaceController placeController )
     {
         super( eventBus, view, placeController );
     }
 
     @Override
-    protected final CachedEventBus bus()
+    protected final EventBus bus()
     {
-        return ( CachedEventBus ) super.bus();
+        return super.bus();
     }
 
     @Override

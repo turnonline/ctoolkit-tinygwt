@@ -8,7 +8,12 @@ package org.ctoolkit.gwt.client;
 public interface Constants
 {
     /**
-     * The format used in REST calls for encoding and decoding Dates.
+     * ISO-8601 (RFC-3339) date format.
      */
     String REST_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
+
+    /**
+     * Servlet path that will handle target URL to upload file (blob).
+     */
+    String UPLOAD_PATH = "/data-upload-handler";
 }
