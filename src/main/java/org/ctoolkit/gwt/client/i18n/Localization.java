@@ -19,7 +19,6 @@
 package org.ctoolkit.gwt.client.i18n;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
-import org.ctoolkit.gwt.client.ui.BooleanListBox;
 
 import java.util.MissingResourceException;
 
@@ -63,11 +62,6 @@ public class Localization
         String[] parts = localizedEnum.getDeclaringClass().getName().split( "\\." );
         String prefix = parts[parts.length - 1];
         return localize( prefix + "__" + localizedEnum.name(), params );
-    }
-
-    public static String localizeBoolean( String prefix, BooleanListBox.BooleanEnum booleanEnum )
-    {
-        return localize( prefix + "__" + booleanEnum.name() );
     }
 
     public static void init( ConstantsWithLookup constantsWithLookup )
