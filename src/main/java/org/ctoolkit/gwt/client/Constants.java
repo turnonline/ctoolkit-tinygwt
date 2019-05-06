@@ -15,5 +15,5 @@ public interface Constants
     /**
      * Servlet path that will handle target URL to upload file (blob).
      */
-    String UPLOAD_PATH = "/data-upload-handler";
+    String UPLOAD_PATH = "/storage-upload";
 }

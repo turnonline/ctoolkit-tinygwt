@@ -18,8 +18,8 @@
 
 package org.ctoolkit.gwt.client.facade;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 
@@ -38,9 +38,7 @@ public class FirebaseAuthRequestBuilder
 {
     private static Map<String, RequestBuilder> calls = new HashMap<>();
 
-    private String token;
-
-    protected native void fireTokenRetrieval( final FirebaseAuthRequestBuilder instance, String key ) /*-{
+    protected native void getTokenAndSend( final FirebaseAuthRequestBuilder instance, String key ) /*-{
         var firebase = $wnd.firebase;
 
         // firebase is initialized
@@ -69,29 +67,24 @@ public class FirebaseAuthRequestBuilder
 
     protected void onTokenReceived( final String idToken, final String key )
     {
-        token = idToken;
-
-        if ( key != null )
+        RequestBuilder builder = calls.get( key );
+        if ( builder != null )
         {
-            RequestBuilder builder = calls.get( key );
-            if ( builder != null )
-            {
-                Scheduler.get().scheduleDeferred( () -> {
-                    try
+            Scheduler.get().scheduleDeferred( () -> {
+                try
+                {
+                    if ( idToken != null )
                     {
-                        if ( token != null )
-                        {
-                            populateAuthorization( builder, token );
-                        }
-                        builder.send();
-                        calls.remove( key );
+                        populateAuthorization( builder, idToken );
                     }
-                    catch ( RequestException e )
-                    {
-                        resetToken();
-                    }
-                } );
-            }
+                    builder.send();
+                    calls.remove( key );
+                }
+                catch ( RequestException e )
+                {
+                    GWT.log( "HTTP call has failed", e );
+                }
+            } );
         }
     }
 
@@ -100,33 +93,17 @@ public class FirebaseAuthRequestBuilder
      * populated with Firebase id token if current user has been found.
      *
      * @param builder the request builder instance
-     * @return the {@link Request} object that can be used to track the request
      */
-    protected Request sendRequest( RequestBuilder builder ) throws RequestException
+    protected void sendRequest( RequestBuilder builder )
     {
-        if ( token == null || token.isEmpty() )
-        {
-            String key = builder.getUrl();
-            calls.put( key, builder );
-
-            fireTokenRetrieval( this, key );
-            return null;
-        }
-        else
-        {
-            populateAuthorization( builder, token );
-            return builder.send();
-        }
+        String key = builder.getUrl();
+        calls.put( key, builder );
+        getTokenAndSend( this, key );
     }
 
     /**
      * Sets the current ID token to {@code null}.
      */
-    protected void resetToken()
-    {
-        token = null;
-    }
-
     protected void populateAuthorization( RequestBuilder builder, String token )
     {
         builder.setHeader( "Authorization", "Bearer " + token );
