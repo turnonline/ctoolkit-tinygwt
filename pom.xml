@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.ctoolkit.maven</groupId>
         <artifactId>ctoolkit-public</artifactId>
-        <version>1</version>
+        <version>2</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -60,15 +60,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
@@ -145,8 +136,8 @@
     <properties>
         <gwt-bom.version>2.8.1</gwt-bom.version>
         <gwt-plugin.version>2.8.1</gwt-plugin.version>
-        <testng.version>6.11</testng.version>
-        <jmockit.version>1.38</jmockit.version>
+        <testng.version>6.14.3</testng.version>
+        <jmockit.version>1.41</jmockit.version>
         <!-- jmockit settings for OpenJDK otherwise throws 'IllegalStateException: To run on OpenJDK 64-Bit Server VM use -javaagent..' -->
         <jmockit.setting>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
         </jmockit.setting>

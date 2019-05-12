@@ -65,7 +65,7 @@ public class FirebaseAuthRequestBuilder
         }
     }-*/;
 
-    protected void onTokenReceived( final String idToken, final String key )
+    private void onTokenReceived( final String idToken, final String key )
     {
         RequestBuilder builder = calls.get( key );
         if ( builder != null )
@@ -102,7 +102,8 @@ public class FirebaseAuthRequestBuilder
     }
 
     /**
-     * Sets the current ID token to {@code null}.
+     * Sets 'Authorization' header with 'Bearer' prefix.
+     * If you need to change it, override this method.
      */
     protected void populateAuthorization( RequestBuilder builder, String token )
     {
