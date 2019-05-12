@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,7 +24,7 @@ import java.util.List;
  * A JSON response should always return a root object (items), not directly an array.
  * The list wrapper with single root field containing list of items.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public class Items<T>
 {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 /**
  * The view interface to be used with {@link org.ctoolkit.gwt.client.presenter.Presenter}.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public interface IView
         extends IsWidget

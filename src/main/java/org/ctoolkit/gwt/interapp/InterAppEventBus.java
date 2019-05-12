@@ -18,7 +18,6 @@ package org.ctoolkit.gwt.interapp;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,15 +102,10 @@ public class InterAppEventBus
         final List<InterAppEventHandler> list = handlersByType.get( type );
         if ( list != null )
         {
-            Scheduler.get().scheduleDeferred( new ScheduledCommand()
-            {
-                @Override
-                public void execute()
+            Scheduler.get().scheduleDeferred( () -> {
+                for ( InterAppEventHandler handler : list )
                 {
-                    for ( InterAppEventHandler handler : list )
-                    {
-                        handler.onEvent( data );
-                    }
+                    handler.onEvent( data );
                 }
             } );
         }

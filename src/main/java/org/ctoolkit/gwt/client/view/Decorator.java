@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ package org.ctoolkit.gwt.client.view;
  * For example show or hide some buttons based on the specific conditions encapsulated in decorator implementation etc.
  * The {@link #decorate()} method will be called right before showing a view to the user once data for view are ready.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public interface Decorator
 {

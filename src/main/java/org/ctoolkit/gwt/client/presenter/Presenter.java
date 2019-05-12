@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@ import org.ctoolkit.gwt.client.view.IView;
 /**
  * Specific presenter injecting customized {@link EventBus}.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public abstract class Presenter<V extends IView>
         extends BinderyPresenter<V>

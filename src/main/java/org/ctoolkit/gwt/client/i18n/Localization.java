@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 import java.util.MissingResourceException;
 
 /**
- * @author <a href="mailto:jozef.pohorelec@ctoolkit.org">Jozef Pohorelec</a>
+ * @author <a href="mailto:pohorelec@turnonline.biz">Jozef Pohorelec</a>
  */
 public class Localization
 {

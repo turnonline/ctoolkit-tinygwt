@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Comvai, s.r.o. All Rights Reserved.
+ * Copyright (c) 2019 Comvai, s.r.o. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,7 @@ import org.ctoolkit.gwt.client.view.IView;
  * The bindery activity presenter implementation. Presenter acts upon the model and the view.
  * It retrieves data from the model and prepares it to be displayed in the view.
  *
- * @author <a href="mailto:aurel.medvegy@ctoolkit.org">Aurel Medvegy</a>
+ * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public abstract class BinderyPresenter<V extends IView>
         extends BaseActivity
