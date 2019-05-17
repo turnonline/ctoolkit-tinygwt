@@ -18,6 +18,7 @@
 
 package org.ctoolkit.gwt.client.presenter;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -43,6 +44,8 @@ public abstract class BinderyPresenter<V extends IView>
 
     private AcceptsOneWidget root;
 
+    private Class<? extends Place> place;
+
     public BinderyPresenter( EventBus eventBus, V view, PlaceController placeController )
     {
         this.eventBus = checkNotNull( eventBus );
@@ -62,6 +65,26 @@ public abstract class BinderyPresenter<V extends IView>
         {
             return reference;
         }
+    }
+
+    /**
+     * Returns the place that's associated with this presenter.
+     *
+     * @return the associated place
+     */
+    public Class getPlace()
+    {
+        return place;
+    }
+
+    /**
+     * Sets the place that will be associated with this presenter.
+     *
+     * @param place the place to be associated
+     */
+    public void setPlace( Class<? extends Place> place )
+    {
+        this.place = place;
     }
 
     /**

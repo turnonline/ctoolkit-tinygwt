@@ -30,7 +30,7 @@
     <artifactId>ctoolkit-tinygwt</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>CtoolkiT tiny GWT components</name>
+    <name>CtoolkiT tiny GWT MVP</name>
     <description>GWT MVP tiny components incl. inter module event bus.</description>
     <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
 
