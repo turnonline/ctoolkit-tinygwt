@@ -29,13 +29,15 @@ import java.util.List;
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public class BinderyView
+public class BinderyView<T>
         extends Composite
-        implements IView
+        implements IView<T>
 {
     private final EventBus eventBus;
 
     private List<Decorator> decorators;
+
+    private T model;
 
     public BinderyView( EventBus eventBus )
     {
@@ -81,6 +83,44 @@ public class BinderyView
         {
             decorators.clear();
         }
+    }
+
+    @Override
+    public T getModel()
+    {
+        beforeGetModel();
+        return model;
+    }
+
+    @Override
+    public void setModel( T model )
+    {
+        this.model = model;
+        afterSetModel();
+    }
+
+    /**
+     * Returns the view's model, no {@link #beforeGetModel()} notification will be fired.
+     *
+     * @return the view's model
+     */
+    protected T getRawModel()
+    {
+        return model;
+    }
+
+    /**
+     * Override to get a notification right before model is going to be retrieved.
+     */
+    protected void beforeGetModel()
+    {
+    }
+
+    /**
+     * Override to get a notification right after model has been set.
+     */
+    protected void afterSetModel()
+    {
     }
 
     @Override

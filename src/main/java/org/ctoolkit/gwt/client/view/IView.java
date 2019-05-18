@@ -25,9 +25,23 @@ import com.google.gwt.user.client.ui.IsWidget;
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public interface IView
+public interface IView<T>
         extends IsWidget
 {
+    /**
+     * Returns the view's model.
+     *
+     * @return the view's model
+     */
+    T getModel();
+
+    /**
+     * Sets the model to be associated with this view.
+     *
+     * @param model the model to be set
+     */
+    void setModel( T model );
+
     /**
      * Hides this composite widget.
      */
