@@ -18,7 +18,7 @@
   -->
 
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8//EN"
-        "https://github.com/gwtproject/gwt/raw/2.8.0/distro-source/core/src/gwt-module.dtd">
+        "https://github.com/gwtproject/gwt/raw/2.8.1/distro-source/core/src/gwt-module.dtd">
 
 <module rename-to="interapp.eventbus">
     <inherits name="com.google.gwt.user.User"/>
