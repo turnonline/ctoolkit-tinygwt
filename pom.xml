@@ -16,8 +16,7 @@
   ~ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.ctoolkit.maven</groupId>
@@ -28,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ctoolkit.gwt</groupId>
     <artifactId>ctoolkit-tinygwt</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
     <packaging>jar</packaging>
     <name>CtoolkiT tiny GWT MVP</name>
     <description>GWT MVP tiny components incl. inter module event bus.</description>
@@ -38,7 +37,7 @@
         <connection>scm:git:[fetch=]git@github.com:turnonline/ctoolkit-tinygwt.git</connection>
         <developerConnection>scm:git:[push=]git@github.com:turnonline/ctoolkit-tinygwt.git</developerConnection>
         <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
-        <tag>HEAD</tag>
+        <tag>ctoolkit-tinygwt-0.5</tag>
     </scm>
 
     <issueManagement>
