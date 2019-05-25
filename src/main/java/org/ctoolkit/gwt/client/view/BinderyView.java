@@ -100,7 +100,7 @@ public class BinderyView<T>
     }
 
     /**
-     * Returns the view's model, no {@link #beforeGetModel()} notification will be fired.
+     * Returns the view's model as it is right now, no {@link #beforeGetModel()} method will be called.
      *
      * @return the view's model
      */

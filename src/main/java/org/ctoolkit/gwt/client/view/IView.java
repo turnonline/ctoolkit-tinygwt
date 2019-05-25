@@ -23,20 +23,21 @@ import com.google.gwt.user.client.ui.IsWidget;
 /**
  * The view interface to be used with {@link org.ctoolkit.gwt.client.presenter.Presenter}.
  *
+ * @param <T> the type of the model to be associated with this view
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
 public interface IView<T>
         extends IsWidget
 {
     /**
-     * Returns the view's model.
+     * Returns the view's model with updated values taken from the UI components.
      *
      * @return the view's model
      */
     T getModel();
 
     /**
-     * Sets the model to be associated with this view.
+     * Sets the model to this view and updates UI components with these values.
      *
      * @param model the model to be set
      */
