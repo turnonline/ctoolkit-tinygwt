@@ -27,18 +27,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The request builder that populates header with Firebase id token.
+ * The request sender that populates header with Firebase id token.
  * Prerequisite is to have a Firebase correctly initialized with authenticated user.
- * {@code firebase.auth().currentUser;} must return a valid user. If returns null, call
- * is executed without authorization header
+ * {@code firebase.auth().currentUser;} must return a valid user. If returns null,
+ * call will be executed without authorization header.
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public class FirebaseAuthRequestBuilder
+public class FirebaseAuthAwareRequestSender
 {
     private static Map<String, RequestBuilder> calls = new HashMap<>();
 
-    protected native void getTokenAndSend( final FirebaseAuthRequestBuilder instance, String key ) /*-{
+    protected native void getTokenAndSend( final FirebaseAuthAwareRequestSender instance, String key ) /*-{
         var firebase = $wnd.firebase;
 
         // firebase is initialized
@@ -50,18 +50,18 @@ public class FirebaseAuthRequestBuilder
                 user.getIdToken().then( function ( currentToken ) {
                     if ( currentToken )
                     {
-                        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
+                        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
                     }
                 } );
             }
             else
             {
-                instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+                instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
             }
         }
         else
         {
-            instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthRequestBuilder::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+            instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
         }
     }-*/;
 
@@ -94,7 +94,7 @@ public class FirebaseAuthRequestBuilder
      *
      * @param builder the request builder instance
      */
-    protected void sendRequest( RequestBuilder builder )
+    public void send( RequestBuilder builder )
     {
         String key = builder.getUrl();
         calls.put( key, builder );
