@@ -89,7 +89,7 @@ public abstract class BinderyPresenter<V extends IView>
 
     /**
      * See {@link com.google.gwt.activity.shared.ActivityManager#onPlaceChange(PlaceChangeEvent)}
-     * -> currentActivity.equals(nextActivity).
+     * currentActivity.equals(nextActivity).
      * It always returns false to make sure that presenter will reload its data for same place with different values.
      *
      * @param obj the reference object to compare

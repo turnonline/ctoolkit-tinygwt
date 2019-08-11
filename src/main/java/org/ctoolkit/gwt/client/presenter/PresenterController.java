@@ -37,7 +37,7 @@ public abstract class PresenterController
     /**
      * Constructor.
      *
-     * @param presenters that will act as a source of mapping Place -> Activity.
+     * @param presenters that will act as a source of mapping Place - Activity.
      */
     public PresenterController( BinderyPresenter... presenters )
     {
