@@ -28,7 +28,7 @@
     <groupId>org.ctoolkit.gwt</groupId>
     <artifactId>ctoolkit-tinygwt</artifactId>
     <version>0.6-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>gwt-lib</packaging>
     <name>CtoolkiT tiny GWT MVP</name>
     <description>GWT MVP tiny components incl. inter module event bus.</description>
     <url>https://github.com/turnonline/ctoolkit-tinygwt</url>
@@ -60,19 +60,18 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <moduleName>org.ctoolkit.gwt.TinyGwt</moduleName>
+                    <skipModule>true</skipModule>
+                </configuration>
                 <executions>
                     <execution>
-                        <configuration>
-                            <modules>
-                                <module>org.ctoolkit.gwt.InterAppEventBus</module>
-                                <module>org.ctoolkit.gwt.TinyGwt</module>
-                            </modules>
-                        </configuration>
                         <goals>
-                            <goal>resources</goal>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -102,7 +101,7 @@
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
+            <artifactId>gwt-dev</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -127,7 +126,7 @@
 
     <properties>
         <gwt-bom.version>2.8.1</gwt-bom.version>
-        <gwt-plugin.version>2.8.1</gwt-plugin.version>
+        <gwt-plugin.version>1.0-rc-10</gwt-plugin.version>
         <testng.version>6.14.3</testng.version>
         <jmockit.version>1.41</jmockit.version>
         <!-- jmockit settings for OpenJDK otherwise throws 'IllegalStateException: To run on OpenJDK 64-Bit Server VM use -javaagent..' -->

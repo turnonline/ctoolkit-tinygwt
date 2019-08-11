@@ -28,5 +28,6 @@
     <extend-property name="locale" values="sk"/>
 
     <source path="client"/>
+    <source path="interapp"/>
 
 </module>
