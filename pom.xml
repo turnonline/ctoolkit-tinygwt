@@ -86,26 +86,17 @@
         </plugins>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.ctoolkit.maven</groupId>
-                <artifactId>gwt-bom</artifactId>
-                <version>${gwt-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -125,7 +116,7 @@
     </dependencies>
 
     <properties>
-        <gwt-bom.version>2.8.1</gwt-bom.version>
+        <gwt.version>2.8.2</gwt.version>
         <gwt-plugin.version>1.0-rc-10</gwt-plugin.version>
         <testng.version>6.14.3</testng.version>
         <jmockit.version>1.41</jmockit.version>
