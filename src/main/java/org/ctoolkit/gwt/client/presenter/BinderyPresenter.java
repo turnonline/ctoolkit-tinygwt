@@ -34,8 +34,6 @@ import org.ctoolkit.gwt.client.view.IView;
 public abstract class BinderyPresenter<V extends IView>
         extends BaseActivity
 {
-    private static IView currentView;
-
     private final EventBus eventBus;
 
     private final V view;
@@ -115,16 +113,10 @@ public abstract class BinderyPresenter<V extends IView>
         onBeforeBackingObject();
 
         // add view to the root of the page (NOTE: panel is root of the page)
-        root.setWidget( currentView == null ? view : currentView );
+        root.setWidget( view );
 
         // call backing object method
         onBackingObject();
-    }
-
-    @Override
-    public void onStop()
-    {
-        currentView = view;
     }
 
     /**
@@ -154,7 +146,6 @@ public abstract class BinderyPresenter<V extends IView>
     {
         view.decorate();
         view.show();
-        this.root.setWidget( view );
     }
 
     /**
