@@ -29,16 +29,36 @@ import java.util.Map;
 /**
  * The request sender that populates header with Firebase id token.
  * Prerequisite is to have a Firebase correctly initialized with authenticated user.
- * {@code firebase.auth().currentUser;} must return a valid user. If returns null,
- * call will be executed without authorization header.
+ * {@code firebase.auth().currentUser;}
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
+ * @author <a href="mailto:pohorelec@turnonline.biz">Jozef Pohorelec</a>
  */
-public class FirebaseAuthAwareRequestSender
+public class FirebaseAuthFacade
 {
     private static Map<String, RequestBuilder> calls = new HashMap<>();
 
-    protected native void getTokenAndSend( final FirebaseAuthAwareRequestSender instance, String key ) /*-{
+    /**
+     * Convenient method of {@link #getIdToken(TokenCallback, String)}
+     * without key.
+     *
+     * @param instance the client specified callback
+     */
+    public void getIdToken( TokenCallback instance )
+    {
+        getIdToken( instance, null );
+    }
+
+    /**
+     * Returns asynchronously via {@link TokenCallback} a JSON Web Token (JWT)
+     * used to identify the user to a Firebase service.
+     * Returns the current token if it has not expired.
+     * Otherwise, this will refresh the token and return a new one.
+     *
+     * @param instance the client specified callback
+     * @param key      the key that will be given back in {@link TokenCallback} as a call identification if needed
+     */
+    public native void getIdToken( TokenCallback instance, String key ) /*-{
         var firebase = $wnd.firebase;
 
         // firebase is initialized
@@ -50,22 +70,22 @@ public class FirebaseAuthAwareRequestSender
                 user.getIdToken().then( function ( currentToken ) {
                     if ( currentToken )
                     {
-                        instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
+                        instance.@org.ctoolkit.gwt.client.facade.TokenCallback::then(Ljava/lang/String;Ljava/lang/String;)( currentToken, key );
                     }
                 } );
             }
             else
             {
-                instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+                instance.@org.ctoolkit.gwt.client.facade.TokenCallback::then(Ljava/lang/String;Ljava/lang/String;)( null, key );
             }
         }
         else
         {
-            instance.@org.ctoolkit.gwt.client.facade.FirebaseAuthAwareRequestSender::onTokenReceived(Ljava/lang/String;Ljava/lang/String;)( null, key );
+            instance.@org.ctoolkit.gwt.client.facade.TokenCallback::then(Ljava/lang/String;Ljava/lang/String;)( null, key );
         }
     }-*/;
 
-    private void onTokenReceived( final String idToken, final String key )
+    private void onTokenReceived( String idToken, String key )
     {
         RequestBuilder builder = calls.get( key );
         if ( builder != null )
@@ -91,14 +111,15 @@ public class FirebaseAuthAwareRequestSender
     /**
      * Sends a HTTP request based on the current builder configuration
      * populated with Firebase id token if current user has been found.
+     * If not yet, the call will be executed without authorization header.
      *
      * @param builder the request builder instance
      */
     public void send( RequestBuilder builder )
     {
-        String key = builder.getUrl();
-        calls.put( key, builder );
-        getTokenAndSend( this, key );
+        String urlAsKey = builder.getUrl();
+        calls.put( urlAsKey, builder );
+        getIdToken( this::onTokenReceived, urlAsKey );
     }
 
     /**
