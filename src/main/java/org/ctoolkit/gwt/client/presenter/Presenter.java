@@ -27,7 +27,7 @@ import org.ctoolkit.gwt.client.view.IView;
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public abstract class Presenter<V extends IView>
+public abstract class Presenter<V extends IView<?>>
         extends BinderyPresenter<V>
 {
     public Presenter( EventBus eventBus, V view, PlaceController placeController )

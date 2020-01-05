@@ -31,7 +31,7 @@ import org.ctoolkit.gwt.client.view.IView;
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public abstract class BinderyPresenter<V extends IView>
+public abstract class BinderyPresenter<V extends IView<?>>
         extends BaseActivity
 {
     private final EventBus eventBus;

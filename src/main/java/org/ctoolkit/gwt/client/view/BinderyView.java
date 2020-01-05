@@ -88,7 +88,7 @@ public class BinderyView<T>
     @Override
     public T getModel()
     {
-        beforeGetModel();
+        beforeGetModel( this.model );
         return model;
     }
 
@@ -96,11 +96,11 @@ public class BinderyView<T>
     public void setModel( T model )
     {
         this.model = model;
-        afterSetModel();
+        afterSetModel( this.model );
     }
 
     /**
-     * Returns the view's model as it is right now, no {@link #beforeGetModel()} method will be called.
+     * Returns the view's model as it is right now, no {@link #beforeGetModel(Object)} method will be called.
      *
      * @return the view's model
      */
@@ -111,15 +111,19 @@ public class BinderyView<T>
 
     /**
      * Override to get a notification right before model is going to be retrieved.
+     *
+     * @param model the current view's model
      */
-    protected void beforeGetModel()
+    protected void beforeGetModel( T model )
     {
     }
 
     /**
      * Override to get a notification right after model has been set.
+     *
+     * @param model the current view's model
      */
-    protected void afterSetModel()
+    protected void afterSetModel( T model )
     {
     }
 

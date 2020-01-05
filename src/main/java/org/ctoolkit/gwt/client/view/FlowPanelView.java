@@ -27,8 +27,8 @@ import com.google.web.bindery.event.shared.EventBus;
  *
  * @author <a href="mailto:medvegy@turnonline.biz">Aurel Medvegy</a>
  */
-public abstract class FlowPanelView
-        extends BinderyView
+public abstract class FlowPanelView<T>
+        extends BinderyView<T>
 {
     /**
      * This panel represents a root of all widgets on the page.
