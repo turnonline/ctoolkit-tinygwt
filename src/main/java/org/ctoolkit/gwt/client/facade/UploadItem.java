@@ -59,4 +59,14 @@ public class UploadItem
     public final native String getServingUrl() /*-{
         return this.servingUrl;
     }-*/;
+
+    /**
+     * Returns ID that represents an identification of the concrete object
+     * that's being associated with the uploaded BLOB.
+     *
+     * @return the ID of the associated object or {@code null} if none
+     */
+    public final native String getAssociatedId() /*-{
+        return this.associatedId;
+    }-*/;
 }

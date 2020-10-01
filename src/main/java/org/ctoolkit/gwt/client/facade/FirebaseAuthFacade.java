@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class FirebaseAuthFacade
 {
-    private static Map<String, RequestBuilder> calls = new HashMap<>();
+    private static final Map<String, RequestBuilder> calls = new HashMap<>();
 
     /**
      * Convenient method of {@link #getIdToken(TokenCallback, String)}
